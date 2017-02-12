@@ -1,6 +1,6 @@
 # ibus-levena
 
-このプロジェクトはibus-katariにインスパイアされて作られました。
+このプロジェクトは[https://github.com/WhiteHawk-taka/katari](ibus-katari)にインスパイアされて作られました。
 
 主にibus-katariのテスト機能の実装とかに使います。
 
