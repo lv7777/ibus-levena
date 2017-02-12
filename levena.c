@@ -14,6 +14,10 @@ struct tagIBusLevenaEngineClass{
 
 };
 
-int main(){
+int main(int argc,char **argv){
+
+//必要なibus_系の宣言
+IBusBus *bus;
+IBusFactory *factory;
 
 }
