@@ -16,6 +16,9 @@ Glibリファレンスの中のGObjectの章。その他にもglib全般につ�
 
 最高の文献だと思う。
 
+[2.18版。こちらも使える。](https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/index.html)
+
+
 * [GTK-DOCの使い方](http://www.clear-code.com/blog/2013/12/2.html)
 
 GObjectについて学べる。
