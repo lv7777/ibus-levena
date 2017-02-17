@@ -9,6 +9,16 @@
 GType ibus_levena_engine_get_type(void);
 //GType型システムに登録する。TODO:もっと詳しく
 
+//インスタンス化された時に呼び出される。コンストラクタ。
+//https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html#gtype-instantiable-classed-init-done
+ibus_levena_engine_init(IBusLevenaEngine *klass){
+    g_printf("levena-engine init!");
+}
+
+ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
+    g_printf("levena-engine init! in class");
+}
+
 typedef struct tagIBusLevenaEngine IBusLevenaEngine;
 typedef struct tagIBusLevenaEngineClass IBusLevenaEngineClass;
 
