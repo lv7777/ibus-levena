@@ -42,8 +42,9 @@ gchar *IMEname="ibus-levena";
 
 bus=ibus_bus_new();
 factory=ibus_factory_new(ibus_bus_get_connection(bus));
-//todo:下の理解。ime側エンジンなのこれ、imエンジンなの？
-ibus_factory_create_engine(factory,IMEname);
+//todo:下の理解。ime側エンジンを作成する。addするわkではない。例えばstructとかの宣言とかを省けるんじゃないかな？
+//とりあえずibus_factory_create_engineとibus_factory_add_engineは違う。
+//ibus_factory_create_engine(factory,IMEname);
 
 iec=IBUS_ENGINE_CLASS (levenaengine);
 iec->process_key_event=levena_process_key_event;
