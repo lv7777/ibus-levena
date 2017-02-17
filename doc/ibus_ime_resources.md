@@ -34,3 +34,5 @@ gtkとglibについて学べる。良い。
 * [C言語でgtkを扱う時のメモ](http://d.hatena.ne.jp/kakurasan/20100618/p1)
 
 ここも要点がまとまっていて良い。gtk+は色んな所で使われるし、imeを実装するとき必須なので覚えておくと良い。
+
+* [ibus_XXX_get_typeが実装されていないabstract関数的な奴の参考ページ](https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html)
