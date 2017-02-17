@@ -3,16 +3,25 @@
 //ibus.hにはibusengine.hやらglibc.hやらがincludeされてる
 #include<ibus.h>
 
+//I will migrate to levena.h
+
+#define IBUS_TYPE_LEVENA_ENGINE (ibus_levena_engine_get_type())
+GType ibus_levena_engine_get_type(void);
+//GType型システムに登録する。TODO:もっと詳しく
+
 typedef struct tagIBusLevenaEngine IBusLevenaEngine;
 typedef struct tagIBusLevenaEngineClass IBusLevenaEngineClass;
 
+//インスタンス変数等を登録する。
 struct tagIBusLevenaEngine{
     IBusEngine parent;
 };
 
+//こっちはメソッドやらクラス変数を登録する。
 struct tagIBusLevenaEngineClass{
     IBusEngineClass parent;
 };
+//上記２つは公開している。protectedやprivateじゃない。
 
 //catch the process-key-event signal from ibus_init
 gboolean levena_process_key_event(IBusEngine *ie,guint keyval,guint keycode,guint state,gpointer user_data){
@@ -45,6 +54,8 @@ factory=ibus_factory_new(ibus_bus_get_connection(bus));
 //todo:下の理解。ime側エンジンを作成する。addするわkではない。例えばstructとかの宣言とかを省けるんじゃないかな？
 //とりあえずibus_factory_create_engineとibus_factory_add_engineは違う。
 //ibus_factory_create_engine(factory,IMEname);
+//TODO:engineタイプの追加。
+ibus_factory_add_engine(factory,IMEname,);
 
 iec=IBUS_ENGINE_CLASS (levenaengine);
 iec->process_key_event=levena_process_key_event;
