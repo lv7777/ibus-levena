@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- filename:levena.xml -->
+<component>
+    <name>org.freedesktop.IBus.levena</name>
+    <description>IBus-levena engine component</description>
+    <exec></exec>
+    <version>0.0.0</version>
+    <author>ryouyu oonuma (aka lv7777)</author>
+    <license>MPL-2.0</license>
+    <homepage>https://github.com/lv7777/levena</homepage>
+    <textdomain>ibus-levena</textdomain>
+</component>
