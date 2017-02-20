@@ -23,7 +23,8 @@ struct tagIBusLevenaEngineClass{
 };
 //上記２つは公開している。protectedやprivateじゃない。
 
-
+//TODO:if understand ibus_obuject_get_type implemnt,delete and test
+G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 
 //インスタンス化された時に呼び出される。コンストラクタ。
 //https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html#gtype-instantiable-classed-init-done
@@ -38,6 +39,11 @@ void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
 void ibus_levena_engine_destroy(IBusLevenaEngine *klass){
     g_printf("end!!");
 }
+
+//TODO:return value no haaku
+// GType ibus_levena_engine_get_type(){
+
+// }
 
 
 //catch the process-key-event signal from ibus_init
