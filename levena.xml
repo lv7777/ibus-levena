@@ -9,4 +9,18 @@
     <license>MPL-2.0</license>
     <homepage>https://github.com/lv7777/levena</homepage>
     <textdomain>ibus-levena</textdomain>
+
+    <engines>
+        <engine>
+            <name>ibus-levena</name>
+            <language>ja</language>
+            <license>MPL-2.0</license>
+            <author>ryouyu oonuma (aka lv7777)</author>
+            <icon></icon>
+            <layout>jp</layout>
+            <longname>Levena</longname>
+            <description>IBus Levena Input Method</description>
+            <rank>0</rank>
+        </engine>
+    </engines>
 </component>
