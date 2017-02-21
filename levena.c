@@ -3,6 +3,10 @@
 //ibus.hにはibusengine.hやらglibc.hやらがincludeされてる
 #include<ibus.h>
 
+// prototype declaration
+
+void registerComponent(IBusBus *);
+
 //I will migrate to levena.h
 
 #define IBUS_TYPE_LEVENA_ENGINE (ibus_levena_engine_get_type())
@@ -85,4 +89,8 @@ iec->process_key_event=levena_process_key_event;
 
 //最後にして至高の一撃、ibus_main()
 ibus_main();
+}
+
+void registerComponent(IBusBus *bus){
+    IBusComponent
 }
