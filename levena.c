@@ -84,6 +84,9 @@ factory=ibus_factory_new(ibus_bus_get_connection(bus));
 //TODO:engineタイプの追加。
 ibus_factory_add_engine(factory,IMEname,IBUS_TYPE_LEVENA_ENGINE);
 
+registerComponent(bus);
+
+
 iec=IBUS_ENGINE_CLASS (levenaengine);
 iec->process_key_event=levena_process_key_event;
 
@@ -92,5 +95,10 @@ ibus_main();
 }
 
 void registerComponent(IBusBus *bus){
-    IBusComponent
+    gchar *filepath="/home/levena/levena/levena.xml";
+    IBusComponent *component;
+    component=ibus_component_new_from_file(filepath);
+    if(!component){
+        g_printf("error! file isn't loading!");
+    }
 }
