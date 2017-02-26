@@ -3,7 +3,7 @@
 <component>
     <name>org.freedesktop.IBus.levena</name>
     <description>IBus-levena engine component</description>
-    <exec></exec>
+    <exec>/home/levena/levena/a.out</exec>
     <version>0.0.0</version>
     <author>ryouyu oonuma (aka lv7777)</author>
     <license>MPL-2.0</license>

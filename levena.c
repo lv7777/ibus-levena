@@ -75,7 +75,6 @@ IBusLevenaEngineClass *levenaengine;
 IBusEngineClass *iec;
 gchar *IMEname="ibus-levena";
 
-registerComponent(bus);
 
 bus=ibus_bus_new();
 factory=ibus_factory_new(ibus_bus_get_connection(bus));
@@ -85,6 +84,7 @@ factory=ibus_factory_new(ibus_bus_get_connection(bus));
 //TODO:engineタイプの追加。
 ibus_factory_add_engine(factory,IMEname,IBUS_TYPE_LEVENA_ENGINE);
 
+registerComponent(bus);
 
 
 iec=IBUS_ENGINE_CLASS (levenaengine);
@@ -95,7 +95,6 @@ ibus_main();
 }
 
 void registerComponent(IBusBus *bus){
-    printf("hello!");
     gchar *filepath="/home/levena/levena/levena.xml";
     IBusComponent *component;
     component=ibus_component_new_from_file(filepath);
@@ -104,4 +103,5 @@ void registerComponent(IBusBus *bus){
     }
     //ok!(if doing test,you should comment out ibus_main();)
     //printf(ibus_component_get_version(component));
+    ibus_bus_register_component (bus, component);
 }
