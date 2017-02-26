@@ -5,6 +5,14 @@
 #include<stdio.h>
 // prototype declaration
 
+
+void print_handler (const gchar* message) { 
+gchar *commandline; 
+commandline = g_strdup_printf ("zenity --info --text=%s", message); 
+g_spawn_command_line_sync (commandline, NULL, NULL, NULL, NULL); 
+g_free (commandline); 
+} 
+
 void registerComponent(IBusBus *);
 
 //I will migrate to levena.h
@@ -51,8 +59,8 @@ void ibus_levena_engine_destroy(IBusLevenaEngine *klass){
 
 
 //catch the process-key-event signal from ibus_init
-gboolean levena_process_key_event(IBusEngine *ie,guint keyval,guint keycode,guint state,gpointer user_data){
-
+gboolean ibus_levena_engine_process_key_event(IBusEngine *ie,guint keyval,guint keycode,guint state,gpointer user_data){
+g_print ("ok?"); 
 printf("process-key-event signal recieved!! : %x",keycode);
 gboolean ret=0;
 return TRUE;
@@ -60,6 +68,9 @@ return TRUE;
 
 
 int main(int argc,char **argv){
+
+g_set_print_handler (print_handler);
+g_print ("g_set_print_handler\n"); 
 
 ibus_init();//絶対必要っぽい。忘れてた。
 
@@ -88,7 +99,7 @@ registerComponent(bus);
 
 
 iec=IBUS_ENGINE_CLASS (levenaengine);
-iec->process_key_event=levena_process_key_event;
+iec->process_key_event=ibus_levena_engine_process_key_event;
 
 //最後にして至高の一撃、ibus_main()
 ibus_main();
