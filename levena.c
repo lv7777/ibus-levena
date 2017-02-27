@@ -41,35 +41,35 @@ G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 //インスタンス化された時に呼び出される。コンストラクタ。
 //https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html#gtype-instantiable-classed-init-done
 void ibus_levena_engine_init(IBusLevenaEngine *klass){
-    g_printf("levena-engine init!");
+    g_print("levena-engine init!");
 
 }
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
-    g_printf("levena-engine init! in class");
+    g_print("levena-engine init! in class");
 
    IBusEngineClass *iec=IBUS_ENGINE_CLASS (klass);
 iec->process_key_event=ibus_levena_engine_process_key_event;
 }
 
 void ibus_levena_engine_destroy(IBusLevenaEngine *klass){
-    g_printf("end!!");
+    g_print("signal_destroy");
 }
 
 void ibus_levena_engine_update_lookup_table(IBusLevenaEngine *klass){
-    g_printf("levena-engine init! in clasffffs");
+    g_print("signal_update_lookup_table");
 }
 
 void ibus_levena_engine_update_preedit(IBusLevenaEngine *klass){
-    g_printf("levena-engine init! in clasffs");
+    g_print("signal_update_preedit");
 }
 
 void ibus_levena_engine_commit_preedit(IBusLevenaEngine *klass){
-    g_printf("levena-engine init! in classw");
+    g_print("signal_commit_preedit");
 }
 
 static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gchar *string){
-    g_printf("levena-engine init! in classzzzz");
+    g_print("signal_commit_string");
     IBusText *text;
     text = ibus_text_new_from_static_string (string);
     ibus_engine_commit_text ((IBusEngine *)klass, text);
@@ -78,7 +78,7 @@ static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gch
 static void
 ibus_levena_engine_update (IBusLevenaEngine *klass)
 {
-    g_printf("levena-engine init! in classzzzz");
+    g_print("signal_update");
     //ibus_enchant_engine_update_preedit (enchant);
     //ibus_engine_hide_lookup_table ((IBusEngine *)enchant);
 }
