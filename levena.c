@@ -136,7 +136,7 @@ void registerComponent(IBusBus *bus){
     IBusComponent *component;
     component=ibus_component_new_from_file(filepath);
     if(!component){
-        g_printf("error! file isn't loading!");
+        g_print("error! file isn't loading!");
     }
     //ok!(if doing test,you should comment out ibus_main();)
     //printf(ibus_component_get_version(component));
