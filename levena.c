@@ -52,10 +52,32 @@ void ibus_levena_engine_destroy(IBusLevenaEngine *klass){
     g_printf("end!!");
 }
 
-//TODO:return value no haaku
-// GType ibus_levena_engine_get_type(){
+void ibus_levena_engine_update_lookup_table(IBusLevenaEngine *klass){
+    g_printf("levena-engine init! in clasffffs");
+}
 
-// }
+void ibus_levena_engine_update_preedit(IBusLevenaEngine *klass){
+    g_printf("levena-engine init! in clasffs");
+}
+
+void ibus_levena_engine_commit_preedit(IBusLevenaEngine *klass){
+    g_printf("levena-engine init! in classw");
+}
+
+static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gchar *string){
+    g_printf("levena-engine init! in classzzzz");
+    IBusText *text;
+    text = ibus_text_new_from_static_string (string);
+    ibus_engine_commit_text ((IBusEngine *)klass, text);
+}
+
+static void
+ibus_levena_engine_update (IBusLevenaEngine *klass)
+{
+    g_printf("levena-engine init! in classzzzz");
+    //ibus_enchant_engine_update_preedit (enchant);
+    //ibus_engine_hide_lookup_table ((IBusEngine *)enchant);
+}
 
 
 //catch the process-key-event signal from ibus_init
@@ -71,7 +93,8 @@ int main(int argc,char **argv){
 
 g_set_print_handler (print_handler);
 g_print ("g_set_print_handler\n"); 
-
+//gchar *dbg="test"
+//ibus_warning("%s",dbg );
 ibus_init();//絶対必要っぽい。忘れてた。
 
 //必要なibus_系の宣言
