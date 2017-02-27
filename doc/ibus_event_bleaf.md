@@ -1,0 +1,1 @@
+# ibus event and signal explanation
