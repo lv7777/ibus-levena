@@ -14,7 +14,7 @@ g_free (commandline);
 } 
 
 void registerComponent(IBusBus *);
-
+gboolean ibus_levena_engine_process_key_event(IBusEngine *,guint ,guint ,guint ,gpointer );
 //I will migrate to levena.h
 
 #define IBUS_TYPE_LEVENA_ENGINE (ibus_levena_engine_get_type())
@@ -42,10 +42,14 @@ G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 //https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html#gtype-instantiable-classed-init-done
 void ibus_levena_engine_init(IBusLevenaEngine *klass){
     g_printf("levena-engine init!");
+
 }
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
     g_printf("levena-engine init! in class");
+
+   IBusEngineClass *iec=IBUS_ENGINE_CLASS (klass);
+iec->process_key_event=ibus_levena_engine_process_key_event;
 }
 
 void ibus_levena_engine_destroy(IBusLevenaEngine *klass){
@@ -121,8 +125,7 @@ ibus_factory_add_engine(factory,IMEname,IBUS_TYPE_LEVENA_ENGINE);
 registerComponent(bus);
 
 
-iec=IBUS_ENGINE_CLASS (levenaengine);
-iec->process_key_event=ibus_levena_engine_process_key_event;
+
 
 //最後にして至高の一撃、ibus_main()
 ibus_main();
