@@ -13,6 +13,7 @@ g_spawn_command_line_sync (commandline, NULL, NULL, NULL, NULL);
 g_free (commandline); 
 } 
 
+IBusPropList* create_propaty_list();
 void registerComponent(IBusBus *);
 gboolean ibus_levena_engine_process_key_event(IBusEngine *,guint ,guint ,guint ,gpointer );
 //I will migrate to levena.h
@@ -43,7 +44,7 @@ G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 void ibus_levena_engine_init(IBusLevenaEngine *klass){
     ibus_warning("levena-engine init!");
     IBusPropList *proplist;
-    proplist=ibus_levena_engine_create_propaty_list();
+    proplist=create_propaty_list();
     ibus_engine_register_properties(klass,proplist);
 }
 
@@ -77,7 +78,7 @@ static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gch
     ibus_engine_commit_text ((IBusEngine *)klass, text);
 }
 
-IBusPropList* ibus_levena_engine_create_propaty_list(){
+IBusPropList* create_propaty_list(){
 
     IBusPropList * proplist;
     proplist=ibus_prop_list_new();
@@ -87,7 +88,7 @@ IBusPropList* ibus_levena_engine_create_propaty_list(){
     IBusText *uistr=ibus_text_new_from_string("hello!!");
     gchar *icon="";
     IBusText *tooltip=ibus_text_new_from_string("this is tooltip");
-    prop=ibus_property_new(propid,IBUS_TYPE_NORMAL,uistr,icon,tooltip,FALSE,TRUE,PROP_STATE_UNCHECKED,proplist);
+    prop=ibus_property_new(propid,PROP_TYPE_NORMAL,uistr,icon,tooltip,FALSE,TRUE,PROP_STATE_UNCHECKED,proplist);
 
     ibus_prop_list_append(proplist,prop);
     return proplist;
