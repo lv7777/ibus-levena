@@ -75,6 +75,22 @@ static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gch
     ibus_engine_commit_text ((IBusEngine *)klass, text);
 }
 
+void ibus_levena_engine_create_propaty_list(){
+
+    IBusPropList * proplist;
+    proplist=ibus_prop_list_new();
+
+    IBusProperty *prop;
+    gchar *propid="prop1";
+    IBusText *uistr=ibus_text_new_from_string("hello!!");
+    gchar *icon="";
+    IBusText *tooltip=ibus_text_new_from_string("this is tooltip");
+    prop=ibus_property_new(propid,IBUS_TYPE_NORMAL,uistr,icon,tooltip,FALSE,TRUE,PROP_STATE_UNCHECKED,proplist);
+
+    ibus_prop_list_append(proplist,prop);
+
+}
+
 static void
 ibus_levena_engine_update (IBusLevenaEngine *klass)
 {
