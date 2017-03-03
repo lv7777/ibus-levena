@@ -43,9 +43,7 @@ G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 //https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html#gtype-instantiable-classed-init-done
 void ibus_levena_engine_init(IBusLevenaEngine *klass){
     ibus_warning("levena-engine init!");
-    IBusPropList *proplist;
-    proplist=create_propaty_list();
-    ibus_engine_register_properties(klass,proplist);
+
 }
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
@@ -105,7 +103,13 @@ ibus_levena_engine_update (IBusLevenaEngine *klass)
 
 //catch the process-key-event signal from ibus_init
 gboolean ibus_levena_engine_process_key_event(IBusEngine *ie,guint keyval,guint keycode,guint state,gpointer user_data){
-//g_print ("ok?"); 
+
+ibus_warning("registor");
+
+    IBusPropList *proplist;
+    proplist=create_propaty_list();
+    ibus_engine_register_properties(ie,proplist);
+
 ibus_warning("process-key-event signal recieved!! : %x",keycode);
 gboolean ret=0;
 return TRUE;
