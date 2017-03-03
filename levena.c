@@ -42,7 +42,9 @@ G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 //https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html#gtype-instantiable-classed-init-done
 void ibus_levena_engine_init(IBusLevenaEngine *klass){
     ibus_warning("levena-engine init!");
-
+    IBusPropList *proplist;
+    proplist=ibus_levena_engine_create_propaty_list();
+    ibus_engine_register_properties(klass,proplist);
 }
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
@@ -75,7 +77,7 @@ static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gch
     ibus_engine_commit_text ((IBusEngine *)klass, text);
 }
 
-void ibus_levena_engine_create_propaty_list(){
+IBusPropList* ibus_levena_engine_create_propaty_list(){
 
     IBusPropList * proplist;
     proplist=ibus_prop_list_new();
@@ -88,7 +90,7 @@ void ibus_levena_engine_create_propaty_list(){
     prop=ibus_property_new(propid,IBUS_TYPE_NORMAL,uistr,icon,tooltip,FALSE,TRUE,PROP_STATE_UNCHECKED,proplist);
 
     ibus_prop_list_append(proplist,prop);
-
+    return proplist;
 }
 
 static void
