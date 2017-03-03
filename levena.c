@@ -16,6 +16,7 @@ g_free (commandline);
 IBusPropList* create_propaty_list();
 void registerComponent(IBusBus *);
 gboolean ibus_levena_engine_process_key_event(IBusEngine *,guint ,guint ,guint ,gpointer );
+void ibus_levena_engine_property_activate(IBusEngine*,const gchar* ,guint);
 //I will migrate to levena.h
 
 #define IBUS_TYPE_LEVENA_ENGINE (ibus_levena_engine_get_type())
@@ -51,6 +52,7 @@ void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
 
    IBusEngineClass *iec=IBUS_ENGINE_CLASS (klass);
 iec->process_key_event=ibus_levena_engine_process_key_event;
+iec->property_activate = ibus_levena_engine_property_activate;
 }
 
 void ibus_levena_engine_destroy(IBusLevenaEngine *klass){
@@ -104,17 +106,24 @@ ibus_levena_engine_update (IBusLevenaEngine *klass)
 //catch the process-key-event signal from ibus_init
 gboolean ibus_levena_engine_process_key_event(IBusEngine *ie,guint keyval,guint keycode,guint state,gpointer user_data){
 
-ibus_warning("registor");
+//ibus_warning("registor");
 
-    IBusPropList *proplist;
-    proplist=create_propaty_list();
-    ibus_engine_register_properties(ie,proplist);
 
 ibus_warning("process-key-event signal recieved!! : %x",keycode);
 gboolean ret=0;
 return TRUE;
 }
 
+void ibus_levena_engine_property_activate(IBusEngine* engine,const gchar* prop_name,guint prop_state){
+
+ibus_warning("process-key-event signal recieved!!111 : %s",prop_name);
+
+    IBusPropList *proplist;
+    proplist=create_propaty_list();
+    ibus_engine_register_properties(engine,proplist);
+
+ibus_warning("process-key-event signal recieved!! : %s",prop_name);
+}
 
 int main(int argc,char **argv){
 
