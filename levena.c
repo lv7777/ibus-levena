@@ -30,6 +30,7 @@ typedef struct tagIBusLevenaEngineClass IBusLevenaEngineClass;
 //インスタンス変数等を登録する。
 struct tagIBusLevenaEngine{
     IBusEngine parent;
+    IBusPropList *proplist;
 };
 
 //こっちはメソッドやらクラス変数を登録する。
@@ -49,7 +50,30 @@ void ibus_levena_engine_init(IBusLevenaEngine *klass){
 }
 
 void ibus_levena_engine_focus_in(IBusLevenaEngine *klass){
+
+    ibus_warning("signal_focusin1");
+
+    klass->proplist=ibus_prop_list_new();
+
+    // ibus_warning("signal_focusin2");
+
+    // IBusProperty *prop;
+    // gchar *propid="prop1";
+    // IBusText *uistr=ibus_text_new_from_string("hello!!");
+    // gchar *icon="";
+    // IBusText *tooltip=ibus_text_new_from_string("this is tooltip");
+
+
+    // ibus_warning("signal_focusin23");
+
+    // prop=ibus_property_new(propid,PROP_TYPE_NORMAL,uistr,icon,tooltip,FALSE,TRUE,PROP_STATE_UNCHECKED,klass->proplist);
+    // ibus_warning("signal_focusin24");
+    // ibus_prop_list_append(klass->proplist,prop);
+
     ibus_warning("signal_focusin");
+
+    ibus_engine_register_properties(klass,klass->proplist);
+    ibus_warning("signal_focusin25");
 }
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
@@ -118,9 +142,9 @@ void ibus_levena_engine_property_activate(IBusEngine* engine,const gchar* prop_n
 
 ibus_warning("process-key-event signal recieved!!111 : %s",prop_name);
 
-    IBusPropList *proplist;
-    proplist=create_propaty_list();
-    ibus_engine_register_properties(engine,proplist);
+    // IBusPropList *proplist;
+    // proplist=create_propaty_list();
+    // ibus_engine_register_properties(engine,proplist);
 
 ibus_warning("process-key-event signal recieved!! : %s",prop_name);
 }
