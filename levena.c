@@ -42,6 +42,113 @@ struct tagIBusLevenaEngineClass{
 //TODO:if understand ibus_obuject_get_type implemnt,delete and test
 G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 
+static void ibus_levena_engine_create_property_list(IBusLevenaEngine *levena){
+    //ibus-levena no prop is prop!!
+    IBusProperty* prop;
+        levena->proplist = ibus_prop_list_new();
+        g_object_ref_sink(levena->proplist);
+
+///create proplist
+IBusText* label,* tooltip;
+    label = ibus_text_new_from_static_string("hellloooo");
+        tooltip = ibus_text_new_from_static_string("hehehe!!"); // ?
+        gchar *name="gcharname";
+        prop = ibus_property_new(name,
+                                 PROP_TYPE_RADIO,
+                                 label,
+                                 "",
+                                 tooltip,
+                                 FALSE,
+                                 TRUE,
+                                 PROP_STATE_UNCHECKED,
+                                 NULL);
+        if (ibus_prop_list_update_property(levena->proplist, prop) == FALSE)
+            ibus_prop_list_append(levena->proplist, prop);
+            ibus_warning("function create property list is end!!!!");
+////create proplist end
+}
+
+// static void ibus_unikey_engine_create_property_list(IBusLevenaEngine *unikey)
+// {
+//     IBusProperty* prop;
+//     IBusText* label,* tooltip;
+//     gchar name[32];
+//     guint i;
+
+//     if (unikey->prop_list == NULL)
+//     {
+//         unikey->prop_list = ibus_prop_list_new();
+//         g_object_ref_sink(unikey->prop_list);
+//     }
+
+// // create input method menu
+//     // add item
+//     for (i = 0; i < NUM_INPUTMETHOD; i++)
+//     {
+//         label = ibus_text_new_from_static_string(Unikey_IMNames[i]);
+//         tooltip = ibus_text_new_from_static_string(""); // ?
+//         sprintf(name, CONFIG_INPUTMETHOD"_%s", Unikey_IMNames[i]);
+//         prop = ibus_property_new(name,
+//                                  PROP_TYPE_RADIO,
+//                                  label,
+//                                  "",
+//                                  tooltip,
+//                                  TRUE,
+//                                  TRUE,
+//                                  Unikey_IM[i]==unikey->im?PROP_STATE_CHECKED:PROP_STATE_UNCHECKED,
+//                                  NULL);
+
+//         if (ibus_prop_list_update_property(unikey->menu_im, prop) == false)
+//             ibus_prop_list_append(unikey->menu_im, prop);
+//     }
+// // END create input method menu
+
+// // create output charset menu
+//     // add item
+//     for (i = 0; i < NUM_OUTPUTCHARSET; i++)
+//     {
+//         label = ibus_text_new_from_static_string(Unikey_OCNames[i]);
+//         tooltip = ibus_text_new_from_static_string(""); // ?
+//         sprintf(name, CONFIG_OUTPUTCHARSET"_%s", Unikey_OCNames[i]);
+//         prop = ibus_property_new(name,
+//                                  PROP_TYPE_RADIO,
+//                                  label,
+//                                  "",
+//                                  tooltip,
+//                                  TRUE,
+//                                  TRUE,
+//                                  Unikey_OC[i]==unikey->oc?PROP_STATE_CHECKED:PROP_STATE_UNCHECKED,
+//                                  NULL);
+
+//         if (ibus_prop_list_update_property(unikey->menu_oc, prop) == false)
+//             ibus_prop_list_append(unikey->menu_oc, prop);
+//     }
+// // END create output charset menu
+
+// // create option menu (for configure unikey)
+//     // add option property
+
+//     // --create and add spellcheck property
+//     label = ibus_text_new_from_static_string(_("Enable spell check"));
+//     tooltip = ibus_text_new_from_static_string(_("If enable, you can decrease mistake when typing"));
+//     prop = ibus_property_new(CONFIG_SPELLCHECK,
+//                              PROP_TYPE_TOGGLE,
+//                              label,
+//                              "",
+//                              tooltip,
+//                              TRUE,
+//                              TRUE,
+//                              (unikey->ukopt.spellCheckEnabled==1)?
+//                              PROP_STATE_CHECKED:PROP_STATE_UNCHECKED,
+//                              NULL);
+
+//     if (ibus_prop_list_update_property(unikey->menu_opt, prop) == false)
+//         ibus_prop_list_append(unikey->menu_opt, prop);
+
+
+// }
+
+
 //インスタンス化された時に呼び出される。コンストラクタ。
 //https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html#gtype-instantiable-classed-init-done
 void ibus_levena_engine_init(IBusLevenaEngine *klass){
@@ -50,30 +157,14 @@ void ibus_levena_engine_init(IBusLevenaEngine *klass){
 }
 
 void ibus_levena_engine_focus_in(IBusLevenaEngine *klass){
-
-    ibus_warning("signal_focusin1");
-
-    klass->proplist=ibus_prop_list_new();
-
-    // ibus_warning("signal_focusin2");
-
-    // IBusProperty *prop;
-    // gchar *propid="prop1";
-    // IBusText *uistr=ibus_text_new_from_string("hello!!");
-    // gchar *icon="";
-    // IBusText *tooltip=ibus_text_new_from_string("this is tooltip");
-
-
-    // ibus_warning("signal_focusin23");
-
-    // prop=ibus_property_new(propid,PROP_TYPE_NORMAL,uistr,icon,tooltip,FALSE,TRUE,PROP_STATE_UNCHECKED,klass->proplist);
-    // ibus_warning("signal_focusin24");
-    // ibus_prop_list_append(klass->proplist,prop);
+ibus_levena_engine_create_property_list(klass);
 
     ibus_warning("signal_focusin");
 
     ibus_engine_register_properties(klass,klass->proplist);
     ibus_warning("signal_focusin25");
+
+    //ibus_unikey_engine_create_property_list()
 }
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
