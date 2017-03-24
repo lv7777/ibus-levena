@@ -13,7 +13,6 @@ g_spawn_command_line_sync (commandline, NULL, NULL, NULL, NULL);
 g_free (commandline); 
 } 
 
-//IBusPropList* create_propaty_list();
 void registerComponent(IBusBus *);
 gboolean ibus_levena_engine_process_key_event(IBusEngine *,guint ,guint ,guint ,gpointer );
 void ibus_levena_engine_property_activate(IBusEngine*,const gchar* ,guint);
@@ -43,7 +42,6 @@ struct tagIBusLevenaEngineClass{
 G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 
 static void ibus_levena_engine_create_property_list(IBusLevenaEngine *levena){
-    //ibus-levena no prop is prop!!
     IBusProperty* prop;
         levena->proplist = ibus_prop_list_new();
         g_object_ref_sink(levena->proplist);
@@ -65,7 +63,6 @@ IBusText* label,* tooltip;
         if (ibus_prop_list_update_property(levena->proplist, prop) == FALSE)
             ibus_prop_list_append(levena->proplist, prop);
             ibus_warning("function create property list is end!!!!");
-////create proplist end
 }
 
 //インスタンス化された時に呼び出される。コンストラクタ。
@@ -114,21 +111,6 @@ static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gch
     ibus_engine_commit_text ((IBusEngine *)klass, text);
 }
 
-// IBusPropList* create_propaty_list(){
-
-//     IBusPropList * proplist;
-//     proplist=ibus_prop_list_new();
-
-//     IBusProperty *prop;
-//     gchar *propid="prop1";
-//     IBusText *uistr=ibus_text_new_from_string("hello!!");
-//     gchar *icon="";
-//     IBusText *tooltip=ibus_text_new_from_string("this is tooltip");
-//     prop=ibus_property_new(propid,PROP_TYPE_NORMAL,uistr,icon,tooltip,FALSE,TRUE,PROP_STATE_UNCHECKED,proplist);
-
-//     ibus_prop_list_append(proplist,prop);
-//     return proplist;
-// }
 
 static void
 ibus_levena_engine_update (IBusLevenaEngine *klass)
@@ -148,12 +130,6 @@ return FALSE;
 }
 
 void ibus_levena_engine_property_activate(IBusEngine* engine,const gchar* prop_name,guint prop_state){
-
-ibus_warning("process-key-event signal recieved!!111 : %s",prop_name);
-
-    // IBusPropList *proplist;
-    // proplist=create_propaty_list();
-    // ibus_engine_register_properties(engine,proplist);
 
 ibus_warning("process-key-event signal recieved!! : %s",prop_name);
 }
