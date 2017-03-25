@@ -31,3 +31,12 @@ levena.xmlではengine以下nameセクションでは`ibus-levena`となって�
 まず，propとかproplistがあるわけだがこれはこの部分.
 
 ![ibus-prop](./ibus_prop.jpg)
+
+この画像の入力モードとか入力タイプとかね．なかなかに分かり辛い．
+
+そしてpropはこの一つ一つの要素．
+
+prop_listはこの枠全体的な概念．
+
+proplistをまず作り，それらのpropを一つ一つ追加して，そいつをibusに登録することで始めて使えるようになる．
+
