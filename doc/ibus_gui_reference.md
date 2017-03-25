@@ -40,3 +40,15 @@ prop_listはこの枠全体的な概念．
 
 proplistをまず作り，それらのpropを一つ一つ追加して，そいつをibusに登録することで始めて使えるようになる．
 
+ところでこいつ，変な作り方したらかなり苦労した．
+
+ibusXXXengineにprop\_list用のメンバ追加して，そこに`ibus_prop_list_new();`する
+
+その後propを作って
+
+```
+        if (ibus_prop_list_update_property(levena->proplist, prop) == FALSE)
+            ibus_prop_list_append(levena->proplist, prop);
+```
+
+で追加して最後に`ibus_engine_register_properties(klass,klass->proplist);`で出来た．
