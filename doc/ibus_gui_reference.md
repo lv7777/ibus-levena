@@ -26,3 +26,8 @@ levena.xmlではengine以下nameセクションでは`ibus-levena`となって�
 
 んでengine側ではibus起動時にibusconfig的なの読み出しておk．
 
+# about ibus-prop
+
+まず，propとかproplistがあるわけだがこれはこの部分.
+
+![ibus-prop](./ibus_prop.jpg)
