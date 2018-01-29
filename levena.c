@@ -132,7 +132,7 @@ ibus_main();
 }
 
 void registerComponent(IBusBus *bus){
-    gchar *filepath="/home/levena/levena/levena.xml";
+    gchar *filepath="./levena.xml";
     IBusComponent *component;
     component=ibus_component_new_from_file(filepath);
     if(!component){

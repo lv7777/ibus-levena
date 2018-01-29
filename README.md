@@ -10,6 +10,28 @@
 
 そのうちでかくなったらMakefile書くかもしれません。
 
+# usage
+
+`cp ./levena.xml /usr/share/ibus/component/`
+ibusにibus-levenaを認識させる。
+
+`ibus restart`
+xmlコンポーネント(levena.xml)を読み込ませるためにibusの再起動
+
+`ibus list-engine | grep levena`
+ibusにibus-levenaが登録されていることを確認。
+
+`./a.out`
+別のターミナルにてIME(ibus-levena)側の起動。
+起動後はibusからの入力待ちとなりターミナルが帰ってきませんが閉じないで下さい。
+閉じるとIME(ibus-levena)が終わってしまいます。
+
+`ibus engine ibus-levena`
+ibus-levenaを現在のIMEとして使用する。
+使用後は入力が効かず、キーボードイベントがすべてIMEが起動しているウインドウに出力されるため、**マウスしか使用できない**ため留意してください。
+終了したい場合、ibus-levenaが起動しているウインドウを閉じれば
+ibusがデフォルトのIMEに自動で切り替わるはずです。
+
 # author
 
 lv7777
