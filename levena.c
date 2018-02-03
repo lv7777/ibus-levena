@@ -5,12 +5,13 @@
 #include<stdio.h>
 // prototype declaration
 
+#define IS_ALPHA(c) (((c)>=IBUS_a && (c)<=IBUS_z) || ((c)>=IBUS_A && (c)<=IBUS_Z))
 
 void print_handler (const gchar* message) { 
-gchar *commandline; 
-commandline = g_strdup_printf ("zenity --info --text=%s", message); 
-g_spawn_command_line_sync (commandline, NULL, NULL, NULL, NULL); 
-g_free (commandline); 
+    gchar *commandline; 
+    commandline = g_strdup_printf ("zenity --info --text=%s", message); 
+    g_spawn_command_line_sync (commandline, NULL, NULL, NULL, NULL); 
+    g_free (commandline); 
 } 
 
 void registerComponent(IBusBus *);
@@ -27,6 +28,8 @@ typedef struct tagIBusLevenaEngineClass IBusLevenaEngineClass;
 //インスタンス変数等を登録する。
 struct tagIBusLevenaEngine{
     IBusEngine parent;
+    GString *preedit;
+    gint cursor_pos;
 };
 
 //こっちはメソッドやらクラス変数を登録する。
@@ -42,14 +45,15 @@ G_DEFINE_TYPE(IBusLevenaEngine,ibus_levena_engine,IBUS_TYPE_ENGINE)
 //https://documents.mikeforce.net/glib-2.18.x-refs/gobject/html/gtype-instantiable-classed.html#gtype-instantiable-classed-init-done
 void ibus_levena_engine_init(IBusLevenaEngine *klass){
     ibus_warning("levena-engine init!");
-
+    klass->preedit=g_string_new("");
+    klass->cursor_pos=0;
 }
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
     ibus_warning("levena-engine init! in class");
 
-   IBusEngineClass *iec=IBUS_ENGINE_CLASS (klass);
-iec->process_key_event=ibus_levena_engine_process_key_event;
+    IBusEngineClass *iec=IBUS_ENGINE_CLASS (klass);
+    iec->process_key_event=ibus_levena_engine_process_key_event;
 }
 
 void ibus_levena_engine_destroy(IBusLevenaEngine *klass){
@@ -61,7 +65,14 @@ void ibus_levena_engine_update_lookup_table(IBusLevenaEngine *klass){
 }
 
 void ibus_levena_engine_update_preedit(IBusLevenaEngine *klass){
-    ibus_warning("signal_update_preedit");
+    IBusText *  text;
+    text = ibus_text_new_from_static_string (klass->preedit->str);
+    ibus_warning("signal_update_preedit: %s ,cursor_pos: %d",klass->preedit,klass->cursor_pos);
+    ibus_engine_update_preedit_text ((IBusEngine *)klass,
+                                    text,
+                                    ibus_text_get_length(text),
+                                    TRUE);
+    //ibus_engine_update_preedit_text();
 }
 
 void ibus_levena_engine_commit_preedit(IBusLevenaEngine *klass){
@@ -79,17 +90,51 @@ static void
 ibus_levena_engine_update (IBusLevenaEngine *klass)
 {
     ibus_warning("signal_update");
-    //ibus_enchant_engine_update_preedit (enchant);
+    //ibus_levena_engine_update_preedit (enchant);//process key event is direct called
     //ibus_engine_hide_lookup_table ((IBusEngine *)enchant);
 }
 
 
 //catch the process-key-event signal from ibus_init
 gboolean ibus_levena_engine_process_key_event(IBusEngine *ie,guint keyval,guint keycode,guint state,gpointer user_data){
-//g_print ("ok?"); 
-ibus_warning("process-key-event signal recieved!! : %x",keycode);
-gboolean ret=0;
-return TRUE;
+    IBusLevenaEngine *levenaengine=(IBusLevenaEngine *)ie;
+    //g_print ("ok?"); 
+    ibus_warning("\nkeycode :%x, is_release :%d, is_modify:%d ,using ctrl:%d,shift:%d",keycode,state&IBUS_RELEASE_MASK,state&IBUS_MOD1_MASK,state&IBUS_CONTROL_MASK,state&IBUS_SHIFT_MASK);
+    //ibus_warning("process-key-event signal recieved!! : %x",keycode);
+    if (state&IBUS_RELEASE_MASK){
+        // releaseは当然無視
+        ibus_warning("is_release");
+        return FALSE;
+    }
+
+    if(state&IBUS_CONTROL_MASK){
+        ibus_warning("is_control");
+        //controlが押されている時は特殊動作
+        //TODO:
+        return FALSE;
+    }
+    if(state&IBUS_MOD1_MASK){
+        ibus_warning("is mod1");
+        //mod1(alt)key
+        return FALSE;
+    }
+
+    if(IS_ALPHA(keyval)){
+        ibus_warning("is_alpha");
+        g_string_insert_c(levenaengine->preedit,levenaengine->cursor_pos,keyval);
+        levenaengine->cursor_pos++;
+        ibus_warning("g_str_insert");
+        ibus_levena_engine_update_preedit(levenaengine);
+        return TRUE;
+    }
+    ibus_warning("end");
+    //release event
+
+    //enabled ctrl or modify key
+    //
+
+    gboolean ret=0;
+    return TRUE;
 }
 
 
