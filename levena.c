@@ -75,8 +75,17 @@ void ibus_levena_engine_update_preedit(IBusLevenaEngine *klass){
     //ibus_engine_update_preedit_text();
 }
 
-void ibus_levena_engine_commit_preedit(IBusLevenaEngine *klass){
+static gboolean ibus_levena_engine_commit_preedit(IBusLevenaEngine *klass){
     ibus_warning("signal_commit_preedit");
+    if((klass->cursor_pos) == 0){
+        return FALSE;
+    }
+    IBusText *text;
+    text=ibus_text_new_from_static_string(klass->preedit->str);
+    ibus_engine_commit_text((IBusEngine*)klass,text);
+    g_string_assign(klass->preedit,"");
+    klass->cursor_pos=0;
+    return TRUE;
 }
 
 static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gchar *string){
@@ -126,7 +135,11 @@ gboolean ibus_levena_engine_process_key_event(IBusEngine *ie,guint keyval,guint 
         ibus_warning("g_str_insert");
         ibus_levena_engine_update_preedit(levenaengine);
         return TRUE;
+    }else if(keyval == IBUS_Return){
+        //enter
+        return ibus_levena_engine_commit_preedit(levenaengine);
     }
+
     ibus_warning("end");
     //release event
 
