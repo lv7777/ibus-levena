@@ -30,6 +30,7 @@ struct tagIBusLevenaEngine{
     IBusEngine parent;
     GString *preedit;
     gint cursor_pos;
+    IBusLookupTable *table;
 };
 
 //こっちはメソッドやらクラス変数を登録する。
@@ -47,6 +48,7 @@ void ibus_levena_engine_init(IBusLevenaEngine *klass){
     ibus_warning("levena-engine init!");
     klass->preedit=g_string_new("");
     klass->cursor_pos=0;
+    klass->table=ibus_lookup_table_new(9,0,TRUE,TRUE);
 }
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
@@ -60,8 +62,26 @@ void ibus_levena_engine_destroy(IBusLevenaEngine *klass){
     ibus_warning("signal_destroy");
 }
 
-void ibus_levena_engine_update_lookup_table(IBusLevenaEngine *klass){
+static gboolean ibus_levena_engine_update_lookup_table(IBusLevenaEngine *klass){
+    klass->table=ibus_lookup_table_new(9,0,TRUE,TRUE);//TODO:????
+    if(klass->preedit->len == 0){
+        //ibus_lookup_table_clear(klass->table);
+        ibus_engine_hide_lookup_table((IBusEngine *)klass);
+        //ibus_engine_update_lookup_table((IBusEngine *)klass,klass->table,TRUE);
+        ibus_warning("ret");
+        return FALSE;
+    }else{
+        ibus_lookup_table_clear(klass->table);
+        IBusText *text;
+        text=ibus_text_new_from_string("test");
+        //TODO: write engine function
+        ibus_lookup_table_append_candidate(klass->table,text);
+        ibus_warning("e");
+        ibus_engine_update_lookup_table((IBusEngine *)klass,klass->table,TRUE);
+        ibus_warning("f");
+    }
     ibus_warning("signal_update_lookup_table");
+    return TRUE;
 }
 
 void ibus_levena_engine_update_preedit(IBusLevenaEngine *klass){
@@ -133,12 +153,15 @@ gboolean ibus_levena_engine_process_key_event(IBusEngine *ie,guint keyval,guint 
         ibus_warning("is_alpha");
         g_string_insert_c(levenaengine->preedit,levenaengine->cursor_pos,keyval);
         levenaengine->cursor_pos++;
-        ibus_warning("g_str_insert");
         ibus_levena_engine_update_preedit(levenaengine);
         return TRUE;
     }else if(keyval == IBUS_Return){
         //enter
         return ibus_levena_engine_commit_preedit(levenaengine);
+    }else if(keyval == IBUS_space){
+        //space//convert lookup
+        ibus_warning("lookup");
+        return ibus_levena_engine_update_lookup_table(levenaengine);
     }
 
     ibus_warning("end");
