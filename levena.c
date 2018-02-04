@@ -149,6 +149,7 @@ gboolean ibus_levena_engine_process_key_event(IBusEngine *ie,guint keyval,guint 
         return FALSE;
     }
 
+//アルファベットの場合
     if(IS_ALPHA(keyval)){
         ibus_warning("is_alpha");
         g_string_insert_c(levenaengine->preedit,levenaengine->cursor_pos,keyval);
