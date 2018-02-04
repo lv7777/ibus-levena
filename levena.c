@@ -85,6 +85,7 @@ static gboolean ibus_levena_engine_commit_preedit(IBusLevenaEngine *klass){
     ibus_engine_commit_text((IBusEngine*)klass,text);
     g_string_assign(klass->preedit,"");
     klass->cursor_pos=0;
+    ibus_levena_engine_update_preedit(klass);
     return TRUE;
 }
 
