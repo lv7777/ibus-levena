@@ -79,13 +79,11 @@ void ibus_levena_engine_init(IBusLevenaEngine *klass){
 }
 
 void ibus_levena_engine_focus_in(IBusLevenaEngine *klass){//create panel
-    
     ibus_warning("signal_focusin");
     ibus_levena_engine_create_property_list(klass);
     ibus_warning("proplist created!");
-    ibus_engine_register_properties(klass,klass->proplist);
+    ibus_engine_register_properties((IBusEngine *)klass,klass->proplist);
     ibus_warning("proplist registered!!");
-
 }//create panel
 
 void ibus_levena_engine_class_init(IBusLevenaEngineClass *klass){
