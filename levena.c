@@ -149,6 +149,16 @@ static void ibus_levena_engine_commit_string (IBusLevenaEngine *klass, const gch
     ibus_engine_commit_text ((IBusEngine *)klass, text);
 }
 
+static gboolean ibus_levena_engine_delete_left (IBusLevenaEngine *klass){
+    if(klass->preedit->len == 0){
+        return FALSE;
+    }else if(klass->cursor_pos > 0){
+        klass->cursor_pos--;
+	g_string_erase(klass->preedit, klass->cursor_pos, 1);
+	return ibus_levena_engine_commit_preedit(klass);
+    }
+    return FALSE;
+}
 
 static void
 ibus_levena_engine_update (IBusLevenaEngine *klass)
@@ -198,6 +208,10 @@ gboolean ibus_levena_engine_process_key_event(IBusEngine *ie,guint keyval,guint 
         //space//convert lookup
         ibus_warning("lookup");
         return ibus_levena_engine_update_lookup_table(levenaengine);
+    }else if(keyval == IBUS_BackSpace){
+        // backspace(delete left)
+        ibus_warning("backspace");
+	return ibus_levena_engine_delete_left(levenaengine);
     }
 
     ibus_warning("end");
